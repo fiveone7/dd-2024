@@ -20,20 +20,25 @@ import { Link as ReactRouterLink, useNavigate } from "react-router-dom";
 import { useContext, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { AuthContext } from "../providers/AuthProvider";
-import axios from 'axios';
-import { API_URLS } from '../Constants';
+import { AppContext } from "../providers/AppProvider";
+import axios from "axios";
+import { API_URLS } from "../Constants";
 
 function Login() {
 	const themeColor = useColorModeValue("blue.400", "blue.300");
 	const toast = useToast();
-    const navigate = useNavigate();
-	const {login} = useContext(AuthContext);
+	const navigate = useNavigate();
+	const { login } = useContext(AuthContext);
+	const { setContactInfo } = useContext(AppContext);
 	const [email, setEmail] = useState("");
 	const [pwd, setPwd] = useState("");
 	const [emailValid, setEmailValid] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const emailRegex = new RegExp(/^[A-Za-z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/, "gm");
+	const emailRegex = new RegExp(
+		/^[A-Za-z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/,
+		"gm"
+	);
 	// const validEmailReg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 	const [showPwd, setShowPwd] = useState(false);
@@ -53,7 +58,6 @@ function Login() {
 	};
 
 	const handleLogin = async () => {
-		
 		if (pwd.length === 0 || !emailValid) {
 			console.log("Email and password must be valid for login");
 			return;
@@ -66,27 +70,38 @@ function Login() {
 				password: pwd,
 			});
 
-			if (response.data.success){
-				navigate("/");
-				toast({
-					title: 'Login Success',
-					description: `${response.data.message}.`,
-					status: 'success',
-					duration: 3000,
-					isClosable: true,
-				});
-                login({email, token: response.data.token})
+			if (response.data.success) {
+				login({ email, token: response.data.token });
+				if (Object.keys(response.data.user.contact).length > 0) {
+					setContactInfo(response.data.user.contact);
+					navigate("/");
+					toast({
+						title: "Login Success",
+						description: `${response.data.message}.`,
+						status: "success",
+						duration: 3000,
+						isClosable: true,
+					});
+				} else {
+					toast({
+						title: "More information",
+						description: `You have to set all required information here. Otherwise the system will not work properly.`,
+						status: "info",
+						duration: 10000,
+						isClosable: true,
+					});
+					navigate("/settings");
+				}
 			} else {
 				toast({
-					title: 'Login Error',
+					title: "Login Error",
 					description: `${response.data.message}.`,
-					status: 'error',
+					status: "error",
 					duration: 3000,
 					isClosable: true,
 				});
 			}
 			setIsLoading(false);
-				
 		} catch (error) {
 			console.error(error);
 		}

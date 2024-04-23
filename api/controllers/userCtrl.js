@@ -5,7 +5,8 @@ const UserCtrl = ()=> {
     const updateContact = async (contact)=> {
         const collection = getUserCollection();
         if (validateInfo(contact)){
-            const user = checkExist(contact['myEmail']);
+            console.log(contact)
+            const user = await checkExist(contact['myEmail']);
             if (user) {
                 await collection.updateOne({
                     email: contact['myEmail']
@@ -24,7 +25,7 @@ const UserCtrl = ()=> {
     }
 
     const getContact = async (email) => {
-        const user = checkExist(email);
+        const user = await checkExist(email);
         return {"success": true, "message": "Get contact information", data: user};
     }
 

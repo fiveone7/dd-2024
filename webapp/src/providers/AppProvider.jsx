@@ -1,16 +1,28 @@
 import { createContext, useState } from "react";
 
-export const AppContext  = createContext();
+export const AppContext = createContext();
 
-const AppProvider = ({children}) => {
+const AppProvider = ({ children }) => {
+	const [contactInfo, setContactInfo] = useState({
+		myName: "",
+		myEmail: "",
+		myNumber: "",
+		spouseName: "",
+		spouseEmail: "",
+		spouseNumber: "",
+	});
 
-    const [contactInfo, setContactInfo] = useState({});
+	const [appointment, setAppointment] = useState({});
 
-    return (
-        <AppContext.Provider value={{contactInfo, setContactInfo}}>
-            {children}
-        </AppContext.Provider>
-    )
-}
+	const [timers, setTimers] = useState({});
+
+	const [wordings, setWordings] = useState({});
+
+	return (
+		<AppContext.Provider value={{ contactInfo, setContactInfo, appointment, setAppointment, timers, setTimers, wordings, setWordings }}>
+			{children}
+		</AppContext.Provider>
+	);
+};
 
 export default AppProvider;

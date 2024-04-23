@@ -10,70 +10,86 @@ import {
 	VStack,
 	useToast,
 } from "@chakra-ui/react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { FaSave } from "react-icons/fa";
-import { AppContext } from '../providers/AppProvider';
-import { AuthContext } from '../providers/AuthProvider';
-import axios from 'axios';
-import { API_URLS } from '../Constants';
+import { AppContext } from "../providers/AppProvider";
+import { AuthContext } from "../providers/AuthProvider";
+import axios from "axios";
+import { API_URLS } from "../Constants";
 
 function ContactInfo() {
-
-	const { user } = useContext(AuthContext);
-	const [isSaving, setIsSaving] = useState(false);
-    const [myName, setMyName] = useState("");
-    const [myEmail, setMyEmail] = useState(user? user.email: "");
-    const [myNumber, setMyNumber] = useState("");
-    const [spouseName, setSpouseName] = useState("");
-    const [spouseEmail, setSpouseEmail] = useState("");
-    const [spouseNumber, setSpouseNumber] = useState("");
+	const { cookieAlive } = useContext(AuthContext);
 	const { setContactInfo } = useContext(AppContext);
+	const [isSaving, setIsSaving] = useState(false);
+	const [myName, setMyName] = useState('');
+	const [myEmail, setMyEmail] = useState(cookieAlive());
+	const [myNumber, setMyNumber] = useState("");
+	const [spouseName, setSpouseName] = useState("");
+	const [spouseEmail, setSpouseEmail] = useState("");
+	const [spouseNumber, setSpouseNumber] = useState("");
 	const toast = useToast();
 
-	const validateInfo = (contact)=> {
+	const validateInfo = (contact) => {
 		if (!contact) {
 			return true;
 		} else {
 			const keys = Object.keys(contact);
-			for(let i = 0; i < keys.length; i++) {
-				if (!contact[keys[i]] || contact[keys[i]] === '')
-				{
-					return false;					
+			for (let i = 0; i < keys.length; i++) {
+				if (!contact[keys[i]] || contact[keys[i]] === "") {
+					return false;
 				}
 			}
 			return true;
 		}
-	}
+	};
 
-	const loadContact = async () => {
-		try {
-			const response = await axios.post(API_URLS.CONTACT_INFO, user.email);
-			if (response.data.success){
-				setContactInfo(response.data.data);
-			} else {
-				toast({
-					title: 'Contact Information',
-					description: `${response.data.message}.`,
-					status: 'error',
-					duration: 3000,
-					isClosable: true,
-				});
+	useEffect(() => {
+		const loadContact = async () => {
+			try {
+				const response = await axios.post(
+					API_URLS.CONTACT_INFO,
+					{email: cookieAlive()}
+				);
+				if (response.data.success) {
+					const contact = response.data.data.contact; 
+					setContactInfo(contact);
+					setMyName(contact['myName']);
+					setMyEmail(contact['myEmail']);
+					setMyNumber(contact['myNumber']);
+					setSpouseName(contact['spouseName']);
+					setSpouseEmail(contact['spouseEmail']);
+					setSpouseNumber(contact['spouseNumber']);
+				} else {
+					toast({
+						title: "Contact Information",
+						description: `${response.data.message}.`,
+						status: "error",
+						duration: 3000,
+						isClosable: true,
+					});
+				}
+			} catch (e) {
+				console.error(e);
 			}
-		} catch (e) {
-			console.error(e);
-		}
-	}
+		};
+		loadContact();
+	}, [cookieAlive, setContactInfo, toast]);
 
-    const handleSave = async ()=> {
+	const handleSave = async () => {
 		try {
 			const contact = {
-				myName, myEmail, myNumber, spouseName, spouseEmail, spouseNumber
+				myName,
+				myEmail,
+				myNumber,
+				spouseName,
+				spouseEmail,
+				spouseNumber,
 			};
-			if (!validateInfo(contact)){
+			if (!validateInfo(contact)) {
 				toast({
-					title: 'Contact Information',
+					title: "Contact Information",
 					description: `Please check the input fields.`,
-					status: 'warning',
+					status: "warning",
 					duration: 3000,
 					isClosable: true,
 				});
@@ -82,20 +98,20 @@ function ContactInfo() {
 			setIsSaving(true);
 			const response = await axios.post(API_URLS.CONTACT_UPDATE, contact);
 
-			if (response.data.success){
+			if (response.data.success) {
 				toast({
-					title: 'Contact Information',
+					title: "Contact Information",
 					description: `${response.data.message}.`,
-					status: 'success',
+					status: "success",
 					duration: 3000,
 					isClosable: true,
 				});
 				setContactInfo(contact);
 			} else {
 				toast({
-					title: 'Contact Information',
+					title: "Contact Information",
 					description: `${response.data.message}.`,
-					status: 'error',
+					status: "error",
 					duration: 3000,
 					isClosable: true,
 				});
@@ -104,7 +120,7 @@ function ContactInfo() {
 		} catch (error) {
 			console.error(error);
 		}
-    }
+	};
 
 	return (
 		<Card minH={"600px"}>
@@ -116,8 +132,8 @@ function ContactInfo() {
 						<Input
 							type="text"
 							placeholder="Gary F Moody"
-                            onChange={(e)=> setMyName(e.target.value)}
-                            defaultValue={myName}
+							onChange={(e) => setMyName(e.target.value)}
+							defaultValue={myName}
 						/>
 					</FormControl>
 					<FormControl>
@@ -125,8 +141,8 @@ function ContactInfo() {
 						<Input
 							type="email"
 							placeholder="grayfmoody@gmail.com"
-                            onChange={(e)=> setMyEmail(e.target.value)}
-                            defaultValue={myEmail}
+							onChange={(e) => setMyEmail(e.target.value)}
+							defaultValue={myEmail}
 						/>
 					</FormControl>
 					<FormControl>
@@ -134,8 +150,8 @@ function ContactInfo() {
 						<Input
 							type="text"
 							placeholder="1 (734) 558-3535"
-                            onChange={(e)=> setMyNumber(e.target.value)}
-                            defaultValue={myNumber}
+							onChange={(e) => setMyNumber(e.target.value)}
+							defaultValue={myNumber}
 						/>
 					</FormControl>
 				</VStack>
@@ -148,8 +164,8 @@ function ContactInfo() {
 						<Input
 							type="text"
 							placeholder="Denis Moody"
-                            onChange={(e)=> setSpouseName(e.target.value)}
-                            defaultValue={spouseName}
+							onChange={(e) => setSpouseName(e.target.value)}
+							defaultValue={spouseName}
 						/>
 					</FormControl>
 					<FormControl>
@@ -157,8 +173,8 @@ function ContactInfo() {
 						<Input
 							type="email"
 							placeholder="denismoody@gmail.com"
-                            onChange={(e)=> setSpouseEmail(e.target.value)}
-                            defaultValue={spouseEmail}
+							onChange={(e) => setSpouseEmail(e.target.value)}
+							defaultValue={spouseEmail}
 						/>
 					</FormControl>
 					<FormControl>
@@ -166,8 +182,8 @@ function ContactInfo() {
 						<Input
 							type="text"
 							placeholder="1 (734) 558-3535"
-                            onChange={e=> setSpouseNumber(e.target.value)}
-                            defaultValue={spouseNumber}
+							onChange={(e) => setSpouseNumber(e.target.value)}
+							defaultValue={spouseNumber}
 						/>
 					</FormControl>
 				</VStack>
@@ -176,7 +192,7 @@ function ContactInfo() {
 				<Button
 					w="full"
 					leftIcon={<FaSave />}
-                    onClick={handleSave}
+					onClick={handleSave}
 					isLoading={isSaving}
 				>
 					Save
