@@ -5,7 +5,7 @@ function Footer() {
 		<Box
 			className="App-footer"
 			minH={20}
-			py={4}
+			py={8}
 			px={20}
 		>
 			<Center>

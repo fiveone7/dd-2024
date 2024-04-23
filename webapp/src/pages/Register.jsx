@@ -20,9 +20,10 @@ import { Link as ReactRouterLink, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import axios from "axios"; 
+import { API_URLS } from "../Constants";
 
 function Register() {
-	const themeColor = useColorModeValue("orange.400", "orange.300");
+	const themeColor = useColorModeValue("blue.400", "blue.300");
 	const navigate = useNavigate();
 	const toast = useToast();
 	const [email, setEmail] = useState("");
@@ -32,7 +33,8 @@ function Register() {
 	const [emailValid, setEmailValid] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const validEmailReg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+	// const validEmailReg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+	const emailRegex = new RegExp(/^[A-Za-z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/, "gm");
 
 	const [showPwd, setShowPwd] = useState(false);
 	const [showPwdConfirm, setShowPwdConfirm] = useState(false);
@@ -40,7 +42,7 @@ function Register() {
 	const handleShowPasswordConfirm = () => setShowPwdConfirm(!showPwdConfirm);
 
 	const handleChangeEmail = (e) => {
-		if (e.target.value && e.target.value.match(validEmailReg)) {
+		if (e.target.value && emailRegex.test(e.target.value)) {
 			setEmailValid(true);
 			setEmail(e.target.value);
 		} else {
@@ -68,10 +70,9 @@ function Register() {
 			return;
 		}
 
-		const apiUrl = process.env.REACT_APP_API_URL;
 		try {
 			setIsLoading(true);
-			const response = await axios.post(`${apiUrl}register`, {
+			const response = await axios.post(API_URLS.REGISTER, {
 				email,
 				password: pwd,
 			});
@@ -204,7 +205,7 @@ function Register() {
 						</FormControl>
 
 						<Button
-							colorScheme="orange"
+							colorScheme="blue"
 							width="100%"
 							onClick={handleSignUp}
 							isLoading={isLoading}

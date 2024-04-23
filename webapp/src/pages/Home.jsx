@@ -1,23 +1,25 @@
-import React from "react";
+import { useState } from "react";
 import { Box, VStack, Text, Image, Button } from "@chakra-ui/react";
 import splash from "../assets/imgs/splash.png";
 import { useNavigate } from "react-router-dom";
 import { useContext } from "react";
 import { AuthContext } from "../providers/AuthProvider";
 function Home() {
-	const { user, cookieAlive } = useContext(AuthContext);
-	const { onNewBook, isLoading } = useContext(BookContext);
+	const { cookieAlive } = useContext(AuthContext);
+	const [isLoading, setIsLoading] = useState(false);
 	const navigate = useNavigate();
 	
-	const handleNewBook = () => {
+	const handleNewDialogue = () => {
+		setIsLoading(true);
 		if (cookieAlive()){
-			onNewBook();
+			console.log('Edit')
 		} else navigate("/login");
+		setIsLoading(false);
 	};
 	return (
 		<Box p={4}>
 			<VStack>
-				<Image src={splash} />
+				<Image src={splash} h={'600px'}/>
 				<Text
 					fontSize={24}
 					align={"center"}
@@ -25,8 +27,8 @@ function Home() {
 					Here, you can send your spouse LETTERS
 				</Text>
 				<Button
-					colorScheme="orange"
-					onClick={handleNewBook}
+					colorScheme="blue"
+					onClick={handleNewDialogue}
 					isLoading={isLoading}
 				>
 					Get Started

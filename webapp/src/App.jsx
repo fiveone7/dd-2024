@@ -5,6 +5,7 @@ import React from "react";
 import { Container } from "@chakra-ui/react";
 import { BrowserRouter } from "react-router-dom";
 import AuthProvider from "./providers/AuthProvider";
+import AppProvider from "./providers/AppProvider";
 
 function App() {
 	return (
@@ -19,7 +20,9 @@ function App() {
 			<BrowserRouter>
 				<AuthProvider>
 					<Header />
-					<Body />
+					<AppProvider>
+						<Body />
+					</AppProvider>
 					<Footer />
 				</AuthProvider>
 			</BrowserRouter>

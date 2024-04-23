@@ -4,29 +4,29 @@ export const AuthContext = createContext();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
-    const [cookies, setCookie, removeCookie] = useCookies(['commmune-audio-book-token', 'commmune-audio-book-user']);
+    const [cookies, setCookie, removeCookie] = useCookies(['dialogue-daily-token', 'dialogue-daily-user']);
 
     const login = ({email, token}) => {
         setUser({email})
-        setCookie("commmune-audio-book-token", token);
-        setCookie("commmune-audio-book-user", email);
+        setCookie("dialogue-daily-token", token);
+        setCookie("dialogue-daily-user", email);
     };
 
     const logout = () => {
         setUser(null);
-        removeCookie("commmune-audio-book-token");
-        removeCookie("commmune-audio-book-user");
+        removeCookie("dialogue-daily-token");
+        removeCookie("dialogue-daily-user");
     };
 
     const cookieAlive = ()=> {
-        if (cookies['commmune-audio-book-user'])
-            return cookies['commmune-audio-book-user'];
+        if (cookies['dialogue-daily-user'])
+            return cookies['dialogue-daily-user'];
         else
             return false;
     }
 
     return (
-        <AuthContext.Provider value={{ login, logout, cookieAlive }}>
+        <AuthContext.Provider value={{ user, login, logout, cookieAlive }}>
             {children}
         </AuthContext.Provider>
     );

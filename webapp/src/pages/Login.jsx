@@ -21,9 +21,10 @@ import { useContext, useState } from "react";
 import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import { AuthContext } from "../providers/AuthProvider";
 import axios from 'axios';
+import { API_URLS } from '../Constants';
 
 function Login() {
-	const themeColor = useColorModeValue("orange.400", "orange.300");
+	const themeColor = useColorModeValue("blue.400", "blue.300");
 	const toast = useToast();
     const navigate = useNavigate();
 	const {login} = useContext(AuthContext);
@@ -32,13 +33,14 @@ function Login() {
 	const [emailValid, setEmailValid] = useState(false);
 	const [isLoading, setIsLoading] = useState(false);
 
-	const validEmailReg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
+	const emailRegex = new RegExp(/^[A-Za-z0-9_!#$%&'*+/=?`{|}~^.-]+@[A-Za-z0-9.-]+$/, "gm");
+	// const validEmailReg = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/g;
 
 	const [showPwd, setShowPwd] = useState(false);
 	const handleShowPassword = () => setShowPwd(!showPwd);
 
 	const handleChangeEmail = (e) => {
-		if (e.target.value && e.target.value.match(validEmailReg)) {
+		if (e.target.value && emailRegex.test(e.target.value)) {
 			setEmailValid(true);
 			setEmail(e.target.value);
 		} else {
@@ -57,10 +59,9 @@ function Login() {
 			return;
 		}
 
-		const apiUrl = process.env.REACT_APP_API_URL;
 		try {
 			setIsLoading(true);
-			const response = await axios.post(`${apiUrl}login`, {
+			const response = await axios.post(API_URLS.LOGIN, {
 				email,
 				password: pwd,
 			});
@@ -78,7 +79,7 @@ function Login() {
 			} else {
 				toast({
 					title: 'Login Error',
-					description: `${response.data.message}. Please try again.`,
+					description: `${response.data.message}.`,
 					status: 'error',
 					duration: 3000,
 					isClosable: true,
@@ -162,7 +163,7 @@ function Login() {
 						</FormControl>
 
 						<Button
-							colorScheme="orange"
+							colorScheme="blue"
 							width="100%"
 							onClick={handleLogin}
 							isLoading={isLoading}
