@@ -19,6 +19,7 @@ import {
 } from "react-icons/fa";
 import ContactInfo from "../components/ContactInfo";
 import { AuthContext } from "../providers/AuthProvider";
+import Appointment from "../components/Appointment";
 function Settings() {
 	const { cookieAlive } = useContext(AuthContext);
 	const [contentOpened, setContentOpened] = useState(1);
@@ -128,6 +129,7 @@ function Settings() {
 					colSpan={2}
 				>
 					{contentOpened === 1 && <ContactInfo />}
+					{contentOpened === 2 && <Appointment/>}
 				</GridItem>
 			</Grid>
 		</Box>

@@ -21,7 +21,7 @@ function ContactInfo() {
 	const { cookieAlive } = useContext(AuthContext);
 	const { setContactInfo } = useContext(AppContext);
 	const [isSaving, setIsSaving] = useState(false);
-	const [myName, setMyName] = useState('');
+	const [myName, setMyName] = useState("");
 	const [myEmail, setMyEmail] = useState(cookieAlive());
 	const [myNumber, setMyNumber] = useState("");
 	const [spouseName, setSpouseName] = useState("");
@@ -46,19 +46,18 @@ function ContactInfo() {
 	useEffect(() => {
 		const loadContact = async () => {
 			try {
-				const response = await axios.post(
-					API_URLS.CONTACT_INFO,
-					{email: cookieAlive()}
-				);
+				const response = await axios.post(API_URLS.CONTACT_INFO, {
+					email: cookieAlive(),
+				});
 				if (response.data.success) {
-					const contact = response.data.data.contact; 
+					const contact = response.data.data.contact;
 					setContactInfo(contact);
-					setMyName(contact['myName']);
-					setMyEmail(contact['myEmail']);
-					setMyNumber(contact['myNumber']);
-					setSpouseName(contact['spouseName']);
-					setSpouseEmail(contact['spouseEmail']);
-					setSpouseNumber(contact['spouseNumber']);
+					setMyName(contact["myName"]);
+					setMyEmail(contact["myEmail"]);
+					setMyNumber(contact["myNumber"]);
+					setSpouseName(contact["spouseName"]);
+					setSpouseEmail(contact["spouseEmail"]);
+					setSpouseNumber(contact["spouseNumber"]);
 				} else {
 					toast({
 						title: "Contact Information",
