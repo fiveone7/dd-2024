@@ -20,6 +20,7 @@ import {
 import ContactInfo from "../components/ContactInfo";
 import { AuthContext } from "../providers/AuthProvider";
 import Appointment from "../components/Appointment";
+import Timers from "../components/Timers";
 function Settings() {
 	const { cookieAlive } = useContext(AuthContext);
 	const [contentOpened, setContentOpened] = useState(1);
@@ -44,6 +45,7 @@ function Settings() {
 				<GridItem
 					rowSpan={1}
 					colSpan={1}
+					w={'full'}
 				>
 					<Card
 						w={"full"}
@@ -127,9 +129,11 @@ function Settings() {
 				<GridItem
 					rowSpan={1}
 					colSpan={2}
+					w={'full'}
 				>
 					{contentOpened === 1 && <ContactInfo />}
 					{contentOpened === 2 && <Appointment/>}
+					{contentOpened === 3 && <Timers/>}
 				</GridItem>
 			</Grid>
 		</Box>

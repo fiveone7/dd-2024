@@ -4,28 +4,38 @@ import {
 	CardBody,
 	CardHeader,
 	HStack,
-	IconButton,
 	VStack,
 	Text,
-	Tag,
-	Grid,
-	SimpleGrid,
-	GridItem,
+	NumberInput,
+	NumberInputField,
+	NumberInputStepper,
+	NumberIncrementStepper,
+	NumberDecrementStepper,
+	Flex,
+	Spacer,
+	CardFooter,
+	useToast
 } from "@chakra-ui/react";
 import { AppContext } from "../providers/AppProvider";
 import { AuthContext } from "../providers/AuthProvider";
-import { FaArrowDown, FaArrowUp } from "react-icons/fa";
-import { useContext, useState } from "react";
+import { FaSave } from "react-icons/fa";
+import { useContext, useState, useEffect } from "react";
+import axios from 'axios';
+import { API_URLS } from "../Constants";
 
 function Appointment() {
+	const [isSaving, setIsSaving] = useState(false);
+	const { cookieAlive } = useContext(AuthContext);
+	const toast = useToast();
+	const { appointment, setAppointment } = useContext(AppContext);
 	const weekDays = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
 	const [writingHour, setWritingHour] = useState(9);
 	const [writingMin, setWritingMin] = useState(0);
-	const [writingNoon, setWritingNoon] = useState("AM");
+	const [writingNoon, setWritingNoon] = useState(false);
 
 	const [sharingHour, setSharingHour] = useState(6);
 	const [sharingMin, setSharingMin] = useState(0);
-	const [sharingNoon, setSharingNoon] = useState("PM");
+	const [sharingNoon, setSharingNoon] = useState(true);
 
 	const [selectedWeekDayButtons, setSelectedWeekDayButtons] = useState([
 		false,
@@ -37,29 +47,21 @@ function Appointment() {
 		false,
 	]);
 	const [selectedDays, setSelectedDays] = useState([]);
-	const { appointment } = useContext(AppContext);
 
-	const init = () => {};
-
-	const loadPage = () => {};
-
-	const handleClickWeekDay = (weekday) => {
-		const isPressed = selectedWeekDayButtons[weekday];
-
-		const tempDefaults = { ...appointment };
-
+	const handleClickWeekDay = (_weekday) => {
+		const isPressed = selectedWeekDayButtons[_weekday];
 		const newSelectedDays = [...selectedDays];
 		if (isPressed) {
-			if (selectedDays.indexOf(weekday) > -1) {
-				newSelectedDays.splice(weekday, 1);
+			if (selectedDays.indexOf(_weekday) !== -1) {
+				newSelectedDays.splice(selectedDays.indexOf(_weekday), 1);
 				setSelectedDays(newSelectedDays);
 			}
 
 			if (newSelectedDays.length === 1) {
-				const writingKey = `${weekDays[weekday]}_writing`;
-				const sharingKey = `${weekDays[weekday]}_sharing`;
-				const writingInfo = tempDefaults[writingKey].split(" ");
-				const sharingInfo = tempDefaults[sharingKey].split(" ");
+				const writingKey = `${weekDays[_weekday]}_writing`;
+				const sharingKey = `${weekDays[_weekday]}_sharing`;
+				const writingInfo = appointment[writingKey];
+				const sharingInfo = appointment[sharingKey];
 				setWritingHour(writingInfo[0]);
 				setWritingMin(writingInfo[1]);
 				setWritingNoon(writingInfo[2]);
@@ -70,10 +72,10 @@ function Appointment() {
 			}
 		} else {
 			if (newSelectedDays.length === 0) {
-				const writingKey = `${weekDays[weekday]}_writing`;
-				const sharingKey = `${weekDays[weekday]}_sharing`;
-				const writingInfo = tempDefaults[writingKey].split(" ");
-				const sharingInfo = tempDefaults[sharingKey].split(" ");
+				const writingKey = `${weekDays[_weekday]}_writing`;
+				const sharingKey = `${weekDays[_weekday]}_sharing`;
+				const writingInfo = appointment[writingKey];
+				const sharingInfo = appointment[sharingKey];
 				setWritingHour(writingInfo[0]);
 				setWritingMin(writingInfo[1]);
 				setWritingNoon(writingInfo[2]);
@@ -82,212 +84,263 @@ function Appointment() {
 				setSharingMin(sharingInfo[1]);
 				setSharingNoon(sharingInfo[2]);
 
-				newSelectedDays.push(weekday);
+				newSelectedDays.push(_weekday);
 			} else {
-				newSelectedDays.push(weekday);
+				newSelectedDays.push(_weekday);
 			}
+
+			setSelectedDays(newSelectedDays);
 		}
 
 		const newSelectedWeekDayButtons = [...selectedWeekDayButtons];
-		newSelectedWeekDayButtons[weekday - 1] = !isPressed;
+		newSelectedWeekDayButtons[_weekday] = !isPressed;
 		setSelectedWeekDayButtons(newSelectedWeekDayButtons);
 	};
 
-    const handleButtonUp = (type, subType)=> {
+	const getNoon = (noon) => {
+		if (noon)
+			return 'PM';
+		else
+			return 'AM';
+	}
 
-    }
+	const handleSave = async () => {
+		try {
+			setIsSaving(true);
+			const response = await axios.post(API_URLS.APPOINTMENT_UPDATE, { appointments: appointment, email: cookieAlive() });
+			if (response.data.success) {
+				toast({
+					title: "Appointment Defaults",
+					description: `${response.data.message}.`,
+					status: "success",
+					duration: 3000,
+					isClosable: true,
+				});
+			} else {
+				toast({
+					title: "Appointment Defaults",
+					description: `${response.data.message}.`,
+					status: "error",
+					duration: 3000,
+					isClosable: true,
+				});
+			}
+			setIsSaving(false);
+		} catch (error) {
+			console.error(error);
+		}
+	}
 
-    const handleButtonDown = (type, subType)=> {
+	const handleChangeHour = (hour, type) => {
+		console.log(selectedDays)
+		if (selectedDays.length === 0) {
+			toast({
+				title: "Appointment Defaults",
+				description: `Please select week days to set appointment defaults.`,
+				status: "info",
+				duration: 3000,
+				isClosable: true,
+			});
+			return;
+		}
+		hour = parseInt(hour);
 
-    }
+		const newAppointment = { ...appointment };
+		if (type === 'writing') {
+			setWritingHour(hour);
+			for (let i = 0; i < selectedDays.length; i++) {
+				const selectedDay = selectedDays[i];
+				newAppointment[`${weekDays[selectedDay]}_${type}`] = [hour, writingMin, writingNoon ? 1 : 0];
+			}
+
+		} else {
+			setSharingHour(hour);
+			for (let i = 0; i < selectedDays.length; i++) {
+				const selectedDay = selectedDays[i];
+				newAppointment[`${weekDays[selectedDay]}_${type}`] = [hour, sharingMin, sharingNoon ? 1 : 0];
+			}
+		}
+		setAppointment(newAppointment);
+	}
+
+	const handleChangeMin = (min, type) => {
+		min = parseInt(min);
+		const newAppointment = { ...appointment };
+		if (type === 'writing') {
+			setWritingMin(min);
+			for (let i = 0; i < selectedDays.length; i++) {
+				const selectedDay = selectedDays[i];
+				newAppointment[`${weekDays[selectedDay]}_${type}`] = [writingHour, min, writingNoon ? 1 : 0];
+			}
+		} else {
+			setSharingMin(min);
+			for (let i = 0; i < selectedDays.length; i++) {
+				const selectedDay = selectedDays[i];
+				newAppointment[`${weekDays[selectedDay]}_${type}`] = [sharingHour, min, sharingNoon ? 1 : 0];
+			}
+		}
+		setAppointment(newAppointment);
+	}
+
+	const handleChangeNoon = (noon, type) => {
+		const newAppointment = { ...appointment };
+		if (type === 'writing') {
+			setWritingNoon(noon);
+			for (let i = 0; i < selectedDays.length; i++) {
+				const selectedDay = selectedDays[i];
+				newAppointment[`${weekDays[selectedDay]}_${type}`] = [writingHour, writingMin, noon ? 1 : 0];
+			}
+		} else {
+			setSharingNoon(noon);
+			for (let i = 0; i < selectedDays.length; i++) {
+				const selectedDay = selectedDays[i];
+				newAppointment[`${weekDays[selectedDay]}_${type}`] = [sharingHour, sharingMin, noon ? 1 : 0];
+			}
+		}
+		setAppointment(newAppointment);
+	}
+
+	useEffect(() => {
+		const loadAppointment = async () => {
+			if (!cookieAlive()) return;
+			try {
+				const response = await axios.post(API_URLS.APPOINTMENT_INFO, {
+					email: cookieAlive(),
+				});
+				if (response.data.success) {
+					const appointment = response.data.data;
+					setAppointment(appointment);
+				} else {
+					toast({
+						title: "Appointment Defaults",
+						description: `${response.data.message}.`,
+						status: "error",
+						duration: 3000,
+						isClosable: true,
+					});
+				}
+			} catch (e) {
+				console.error(e);
+			}
+		};
+		loadAppointment();
+	}, [cookieAlive, setAppointment, toast]);
 
 	return (
-		<Card minH={"600px"}>
+		<Card minH={"600px"} w={'full'}>
 			<CardHeader>
-				<Grid
-					templateRows={"repeat(1, 1fr)"}
-					templateColumns={"repeat(2, 1fr)"}
-					gap={4}
-				>
-					<GridItem
-						rowSpan={1}
-						colSpan={1}
-						textAlign={"center"}
-					>
+				Appointment Defaults
+			</CardHeader>
+			<CardBody>
+				<VStack gap={12} align={'start'}>
+					<Flex gap={4}>
 						<Text>Default time for Writing</Text>
-					</GridItem>
-					<GridItem
-						rowSpan={1}
-						colSpan={1}
-						textAlign={"center"}
-					>
+						<Spacer />
+						<NumberInput
+							min={0}
+							max={12}
+							w={'10rem'}
+							value={writingHour}
+							onChange={(e) => handleChangeHour(e, 'writing')}>
+							<NumberInputField
+								fontSize={20}
+								padding={'0.75rem'}
+								textAlign={"center"}
+							/>
+							<NumberInputStepper>
+								<NumberIncrementStepper />
+								<NumberDecrementStepper />
+							</NumberInputStepper>
+						</NumberInput>
+						<Text fontSize={20}>:</Text>
+						<NumberInput
+							min={0}
+							max={59}
+							w={'10vw'}
+							value={writingMin}
+							onChange={(e) => handleChangeMin(e, 'writing')}>
+							<NumberInputField
+								fontSize={20}
+								padding={'0.75rem'}
+								textAlign={"center"}
+								maxLength={2}
+							/>
+							<NumberInputStepper>
+								<NumberIncrementStepper />
+								<NumberDecrementStepper />
+							</NumberInputStepper>
+						</NumberInput>
+						<Text fontSize={20}>:</Text>
+						<Button onClick={e => handleChangeNoon(!writingNoon, 'writing')}>{getNoon(writingNoon)}</Button>
+					</Flex>
+					<Flex gap={4}>
 						<Text>Default time for Sharing</Text>
-					</GridItem>
-				</Grid>
-			</CardHeader>
-			<CardBody>
-				<Grid
-					templateRows={"repeat(1, 1fr)"}
-					templateColumns={"repeat(2, 1fr)"}
-					gap={4}
-				>
-					<GridItem
-						rowSpan={1}
-						colSpan={1}
+						<Spacer />
+						<NumberInput
+							min={0}
+							max={12}
+							w={'10vw'}
+							value={sharingHour}
+							onChange={(e) => handleChangeHour(e, 'sharing')}>
+							<NumberInputField
+								fontSize={20}
+								padding={'0.75rem'}
+								textAlign={"center"}
+								maxLength={2}
+							/>
+							<NumberInputStepper>
+								<NumberIncrementStepper />
+								<NumberDecrementStepper />
+							</NumberInputStepper>
+						</NumberInput>
+						<Text fontSize={20}>:</Text>
+						<NumberInput
+							min={0}
+							max={59}
+							w={'10vw'}
+							value={sharingMin}
+							onChange={(e) => handleChangeMin(e, 'sharing')}>
+							<NumberInputField
+								fontSize={20}
+								padding={'0.75rem'}
+								textAlign={"center"}
+								maxLength={2} />
+							<NumberInputStepper>
+								<NumberIncrementStepper />
+								<NumberDecrementStepper />
+							</NumberInputStepper>
+						</NumberInput>
+						<Text fontSize={20}>:</Text>
+						<Button onClick={e => handleChangeNoon(!sharingNoon, 'sharing')}>{getNoon(sharingNoon)}</Button>
+					</Flex>
+					<Text>Select day to change time</Text>
+					<HStack
+						w={"full"}
+						spacing={4}
 					>
-						<HStack w={"full"}>
-							<VStack w={"full"}>
-								<IconButton
-									icon={<FaArrowUp />}
-									size={"lg"}
-									bg={"blue.500"}
-                                    onClick={()=> handleButtonUp('writing', 'hour')}
-								/>
-								<Tag
-									fontSize={20}
-									size={"lg"}
-								>
-									{writingHour.toString().padStart(2, "0")}
-								</Tag>
-								<IconButton
-									icon={<FaArrowDown />}
-									size={"lg"}
-									bg={"blue.500"}
-                                    onClick={()=> handleButtonDown('writing', 'hour')}
-								/>
-							</VStack>
-							<VStack w={"full"}>
-								<IconButton
-									icon={<FaArrowUp />}
-									size={"lg"}
-									bg={"blue.500"}
-                                    onClick={()=> handleButtonUp('writing', 'min')}
-								/>
-								<Tag
-									fontSize={20}
-									size={"lg"}
-								>
-									{writingMin.toString().padStart(2, "0")}
-								</Tag>
-								<IconButton
-									icon={<FaArrowDown />}
-									size={"lg"}
-									bg={"blue.500"}
-                                    onClick={()=> handleButtonDown('writing', 'min')}
-								/>
-							</VStack>
-							<VStack w={"full"}>
-								<IconButton
-									icon={<FaArrowUp />}
-									size={"lg"}
-									bg={"blue.500"}
-                                    onClick={()=> handleButtonUp('writing', 'noon')}
-								/>
-								<Tag
-									fontSize={20}
-									size={"lg"}
-								>
-									{writingNoon}
-								</Tag>
-								<IconButton
-									icon={<FaArrowDown />}
-									size={"lg"}
-									bg={"blue.500"}
-                                    onClick={()=> handleButtonDown('writing', 'noon')}
-								/>
-							</VStack>
-						</HStack>
-					</GridItem>
-					<GridItem
-						rowSpan={1}
-						colSpan={1}
-					>
-						<HStack w={"full"}>
-							<VStack w={"full"}>
-								<IconButton
-									icon={<FaArrowUp />}
-									size={"lg"}
-									bg={"blue.500"}
-                                    onClick={()=> handleButtonUp('sharing', 'hour')}
-								/>
-								<Tag
-									fontSize={20}
-									size={"lg"}
-								>
-									{sharingHour.toString().padStart(2, "0")}
-								</Tag>
-								<IconButton
-									icon={<FaArrowDown />}
-									size={"lg"}
-									bg={"blue.500"}
-                                    onClick={()=> handleButtonDown('sharing', 'hour')}
-								/>
-							</VStack>
-							<VStack w={"full"}>
-								<IconButton
-									icon={<FaArrowUp />}
-									size={"lg"}
-									bg={"blue.500"}
-                                    onClick={()=> handleButtonUp('sharing', 'min')}
-								/>
-								<Tag
-									fontSize={20}
-									size={"lg"}
-								>
-									{sharingMin.toString().padStart(2, "0")}
-								</Tag>
-								<IconButton
-									icon={<FaArrowDown />}
-									size={"lg"}
-									bg={"blue.500"}
-                                    onClick={()=> handleButtonDown('sharing', 'min')}
-								/>
-							</VStack>
-							<VStack w={"full"}>
-								<IconButton
-									icon={<FaArrowUp />}
-									size={"lg"}
-									bg={"blue.500"}
-                                    onClick={()=> handleButtonUp('sharing', 'noon')}
-								/>
-								<Tag
-									fontSize={20}
-									size={"lg"}
-								>
-									{sharingNoon}
-								</Tag>
-								<IconButton
-									icon={<FaArrowDown />}
-									size={"lg"}
-									bg={"blue.500"}
-                                    onClick={()=> handleButtonDown('sharing', 'noon')}
-								/>
-							</VStack>
-						</HStack>
-					</GridItem>
-				</Grid>
+						{weekDays.map((weekDay, index) => (
+							<Button
+								key={index}
+								{...(selectedWeekDayButtons[index] ? { bg: "blue.500" } : {})}
+								onClick={(e) => handleClickWeekDay(index)}
+							>
+								{weekDay}
+							</Button>
+						))}
+					</HStack>
+				</VStack>
 			</CardBody>
-			<CardHeader textAlign={"center"}>
-				Select day to change time
-			</CardHeader>
-			<CardBody>
-				<HStack
-					w={"full"}
-					justify={"space-between"}
+			<CardFooter>
+				<Button
+					w="full"
+					leftIcon={<FaSave />}
+					onClick={handleSave}
+					isLoading={isSaving}
 				>
-					{weekDays.map((weekDay, index) => (
-						<Button
-							key={index}
-							{...(selectedWeekDayButtons[index] === true
-								? { bg: "blue.500" }
-								: {})}
-							onClick={() => handleClickWeekDay(index)}
-						>
-							{weekDay}
-						</Button>
-					))}
-				</HStack>
-			</CardBody>
+					Save
+				</Button>
+			</CardFooter>
+
 		</Card>
 	);
 }
