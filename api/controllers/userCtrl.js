@@ -111,6 +111,42 @@ const UserCtrl = () => {
         };
     };
 
+    const updateWords = async ({ words, email }) => {
+        const collection = getUserCollection();
+        if (validateInfo(timers)) {
+            const user = await checkExist(email);
+            if (user) {
+                await collection.updateOne(
+                    {
+                        email: email,
+                    },
+                    {
+                        $set: {
+                            words: words,
+                        },
+                    }
+                );
+                return { success: true, message: "Updated successfully" };
+            } else {
+                return {
+                    success: false,
+                    message: "Provided email is not correct.",
+                };
+            }
+        } else {
+            return { success: false, message: "Invalid information" };
+        }
+    };
+
+    const getWords = async (email) => {
+        const user = await checkExist(email);
+        return {
+            success: true,
+            message: "Get email wordings",
+            data: user["words"],
+        };
+    };
+
     const validateInfo = (value) => {
         if (!value) {
             return false;
@@ -132,6 +168,8 @@ const UserCtrl = () => {
         getAppointment,
         updateTimers,
         getTimers,
+        updateWords,
+        getWords
     };
 };
 

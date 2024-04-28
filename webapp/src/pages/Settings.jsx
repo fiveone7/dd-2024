@@ -21,6 +21,7 @@ import ContactInfo from "../components/ContactInfo";
 import { AuthContext } from "../providers/AuthProvider";
 import Appointment from "../components/Appointment";
 import Timers from "../components/Timers";
+import Words from "../components/Words";
 function Settings() {
 	const { cookieAlive } = useContext(AuthContext);
 	const [contentOpened, setContentOpened] = useState(1);
@@ -134,6 +135,7 @@ function Settings() {
 					{contentOpened === 1 && <ContactInfo />}
 					{contentOpened === 2 && <Appointment/>}
 					{contentOpened === 3 && <Timers/>}
+					{contentOpened === 4 && <Words/>}
 				</GridItem>
 			</Grid>
 		</Box>

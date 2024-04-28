@@ -61,7 +61,11 @@ const AppProvider = ({ children }) => {
         ],
     });
 
-    const [wordings, setWordings] = useState({});
+    const [words, setWords] = useState({
+        appointment: "",
+        done: "",
+        share: ""
+    });
 
     return (
         <AppContext.Provider
@@ -72,8 +76,8 @@ const AppProvider = ({ children }) => {
                 setAppointment,
                 timers,
                 setTimers,
-                wordings,
-                setWordings,
+                words,
+                setWords,
             }}
         >
             {children}

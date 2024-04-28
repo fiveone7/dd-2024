@@ -38,7 +38,6 @@ user.post('/appointment', async(req, res)=> {
     }
 });
 
-
 user.post('/timers_update', async(req, res)=> {
     try {
         const data = req.body;
@@ -52,6 +51,24 @@ user.post('/timers', async(req, res)=> {
     try {
         const {email} = req.body;
         res.send(await userCtrl.getTimers(email));
+    } catch (e) {
+        res.status(500).json({ success: false, message: `API error ${e.message}` });
+    }
+});
+
+user.post('/words_update', async(req, res)=> {
+    try {
+        const data = req.body;
+        res.send(await userCtrl.updateWords(data));
+    } catch (e) {
+        res.status(500).json({ success: false, message: `API error ${e.message}` });
+    }
+});
+
+user.post('/words', async(req, res)=> {
+    try {
+        const {email} = req.body;
+        res.send(await userCtrl.getWords(email));
     } catch (e) {
         res.status(500).json({ success: false, message: `API error ${e.message}` });
     }

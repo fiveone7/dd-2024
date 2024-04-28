@@ -83,7 +83,11 @@ const AuthCtrl = () => {
                     },
                 ],
             },
-            wordings: {},
+            words: {
+                appointment: '',
+                done: '',
+                share: ''
+            },
         });
         if (user) {
             return { success: true, message: "Registered successfully" };

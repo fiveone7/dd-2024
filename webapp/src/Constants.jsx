@@ -8,4 +8,6 @@ export const API_URLS = {
     APPOINTMENT_INFO: `${process.env.REACT_APP_API_URL}/user/appointment`,
     TIMERS_UPDATE: `${process.env.REACT_APP_API_URL}/user/timers_update`,
     TIMERS_INFO: `${process.env.REACT_APP_API_URL}/user/timers`,
+    WORDS_UPDATE: `${process.env.REACT_APP_API_URL}/user/words_update`,
+    WORDS_INFO: `${process.env.REACT_APP_API_URL}/user/words`,
 }
