@@ -1,0 +1,208 @@
+{
+    "howto": {
+        "Writing Letter": [
+            {
+                "step": "Start Timer",
+                "content": []
+            },
+            {
+                "step": "Salutation",
+                "content": [
+                    "Write something nice about your spouse",
+                    "Write a short prayer"
+                ]
+            },
+            {
+                "step": "Answer question",
+                "content": ["Identify top 3 feelings - Positive or Negative"]
+            },
+            {
+                "step": "Describe your feelings",
+                "content": ["Write about Strongest feeling", "Use PIM format"]
+            },
+            {
+                "step": "Sign Letter",
+                "content": []
+            },
+            {
+                "step": "Send/Exchange Letter",
+                "content": []
+            }
+        ],
+        "Sharing Letter": [
+            {
+                "step": "Start Timer",
+                "content": []
+            },
+            {
+                "step": "Read Letter",
+                "content": [
+                    "Read once for clarity and understanding",
+                    "Read a second time focused on spouse's feelings"
+                ]
+            },
+            {
+                "step": "Dialogue",
+                "content": ["Focus on FEELINGS ONLY", "Partner will confirm your understanding", "(No discussions or arguments)"]
+            },
+            {
+                "step": "Select next day's question",
+                "content": []
+            },
+            {
+                "step": "Thank spouse",
+                "content": []
+            }
+        ]
+    },
+    "glossary": {
+        "Abbreviations": {
+            "HDIF": "How do I feel?",
+            "HDIFAMA": "How do I feel about my answer?",
+            "HDIFAT": "How do I feel about this/that?",
+            "HDIFSTWY": "How do I feel sharing this with you?",
+            "HDIFTYT": "How do I feel telling you this?",
+            "DYFF": "Describe your feelings fully?"
+        },
+        "Terms": {
+            "Acceptance":"To believe in and approve of without judgement.",
+            "Affirmation":"The communication of affection, thoughts, words, and deeds that confirm to our spouse they are loved and valued.",
+            "Assumptions":"The act of take for granted or supposing.",
+            "Attitude":"A mental disposition that shows mood and action through feelings or thoughts.",
+            "Barrier":"The way we act.",
+            "Behavior":"The way we act.",
+            "Change":"To get rid of negative old habits and/or ideas.",
+            "Commitment":"Working at and making efforts to improve. Commitment is a decision.",
+            "Communication":"An exchange of information through verbal or written transmission.",
+            "Communion/Eucharist":"A sacrament of Christian faiths in which bread and wine is transformed into the body and blood of Christ.",
+            "Community":"A unified body of individuals with a common interest.",
+            "Conflict":"When two individuals want different things at the same time.",
+            "Confrontation":"To face an issue and stick with it until resolved or at least we know exactly what we are dealing with.",
+            "Covenant":"A formal, solemn and binding agreement between two people.",
+            "Criticism":"The act of making judgements and stressing the faults of another.",
+            "Decision":"To make a free-will choice, despite feelings, and regardless of the outcome.",
+            "Dialogue":"(Written and Verbal) A technique of communication where we describe to our spouse our feelings using relatable examples such as physical sensation, images and past experiences.",
+            "Discernment":"A process which involves intellectual and emotional contemplation for the purpose of making decisions.",
+            "Discussion":"The talking about our ideas, thoughts and judgments.",
+            "Disillusionment":"A stage of marriage when you realize you're not who you thought you'd be, your spouse is not who you thought they would be, and your marriage isn't what you thought it would be.",
+            "Double Standard":"Seeing the good aspects of others, and excuse or ignore their faults and concentrate on our own deficiencies rather than our goodness. This can be reversed, seeing our own faults, but not seeing faults in others.",
+            "Emotion/Feeling":"Spontaneous, inner reaction to a person, place or situation (Past or Present).",
+            "Eucharist/Communion":"A sacrament of Christian faiths in which bread and wine is transformed into the body and blood of Christ.",
+            "Expectation":"When you think someone should be a certain way or something should happen a certain way. Looking forward to, anticipation.",
+            "Family of Origin":"Relates to the environment we grew up in.",
+            "Fidelity":"Faithfulness in honoring an obligation or promise.",
+            "Forgive":"Reconciliation, to cease to blame, to cease to feel resentment against, and cease to desire to punish another.",
+            "Garbage Dumping":"To blame or accuse our spouse for our feelings and actions, or unloading on our spouse what we see to be his/her collected faults.",
+            "Goal":"The end toward which an effort is directed.",
+            "Holy":"That which is held sacred or divine because of its origin or connection with God.",
+            "Ideal":"Something recognized as good and worthwhile and you want in your life sometime but not willing to sacrifice for it now.",
+            "Infidelity":"The opposite of fidelity, involving the breaking of promises and being unfaithful.",
+            "Interests":"Those activities, concerns, and involvements that draw our attention, excite us and are often our driving force.",
+            "Intimacy":"The way we are involved with one another and we become vulnerable and transparent.",
+            "Judgments":"One's own opinions or ideas.",
+            "Listen":"To make a conscious effort to hear and understand.",
+            "Manipulation":"Attempting to control situations and those around us by using certain behaviors (intimidation) so we feel comfortable and satisfied.",
+            "Marriage (Christian)":"The close union of a man and a woman involving Jesus as the central part of this union.",
+            "Married Singles":"When a married couple lives a separate, independent, and self-centered existence with each other.",
+            "Masks":"The way we act with others in an effort to be accepted and to feel good about ourselves. It covers up our poor self-image and when used to exaggeration can become a problem in our relationship with others.",
+            "Ministry":"People devoting their time, talents, and gifts to help others.",
+            "Misery":"Stage of marriage where it seems hopeless and you may experience many feelings, such as despair, anger, hurt, etc.",
+            "Need":"Something essential to our well-being.",
+            "Non-Verbal":"Things (beside speech) that speak to another, such as body language, tone of voice, attitude, etc.",
+            "Personality Type":"Helper, Organizer, Thinker, Catalyst - We all have characteristics of each, but one is most predominant and comes from our family of origin.",
+            "Praise":"Words or acts that express approval or admiration.",
+            "Prime Place":"A location deemed to be the best place for an activity.",
+            "Prime Time":"A time deemed to be the best to set aside for an activity.",
+            "Quality":"A characteristic that distinguishes excellent or superiority from average and/or ordinary.",
+            "Quantity":"A considerable amount of anything, especially time.",
+            "Rejection":"To refuse to take, agree to, use, believe, etc.",
+            "Retrouvaille":"A program for hurting couples and means “to rediscover or recover life.”",
+            "Rituals":"Interactions that are repeated, coordinated and hold emotional significance for the participants., distinguishable from routines.",
+            "Romance":"A stage in the beginning of a marriage where we were happy and valued each other, ignoring our spouse's weaknesses.",
+            "Sacrament":"A visible and sacred sign that signifies God's presence in our lives and give grace.",
+            "Self-Talk":"Silent conversations we have with ourselves, which help to create our current attitude toward situations.",
+            "Sex":"The act of intercourse between husband and wife.",
+            "Sexuality":"Encompasses everything that we perceive about ourselves as masculine or feminine.",
+            "Sharing":"The willingness to express to others your feelings, thoughts and ideas.",
+            "Thoughts":"The product of mental activity, that which one thinks.",
+            "Trust":"Firm belief in the honest, goodness, and reliability of our spouse.",
+            "Unconditional":"Absolute, without conditions or reservations.",
+            "Value":"Something recognized as good and worthwhile that you choose to have in your life now by sacrificing other things."
+        }
+    },
+    "pim": {
+        "P": {
+            "step":"Physical Sensation",
+            "content": []
+        },
+        "I": {
+            "step": "Images",
+            "content": [
+                "Level of intensity (Scale from 1 to 10)",
+                "Color",
+                "Nature",
+                "Painting or Picture",
+                "Music",
+                "Sport or Event",
+                "Animal",
+                "Identify senses (Sight, Smell, Sound, Taste, Touch)",
+                "Mental Picture"
+            ]
+        },
+        "M": {
+            "step": "Memory or Past Experience"
+        }
+    },
+    "weds": {
+        "W = Write": [
+            "10 Minutes Minimum",
+            "Prime Time",
+            "No need to write at the same time",
+            "Focus on naming and describing feelings"
+        ],
+        "E = Exchange": [
+            "Respectfully",
+            "In Silence",
+            "No comments",
+            "No Negative or Non-Verbals"
+        ],
+        "D = Dialogue": [
+            "10 minutes Minimum",
+            "Prime Time",
+            "Prime Place",
+            "Begin with Strongest feeling",
+            "Try to experience the feeling",
+            "Mirror the feeling to spouse",
+            "Listen with your heart",
+            "Listen beyond the words"
+        ],
+        "S = Select": [
+            "Select next DAILY DIALOGUE question",
+            "Take turns selecting the question",
+            "Make up questions",
+            "Don't always select difficult topics",
+            "Choose positive and pleasant topics"
+        ]
+    },
+    "rules": {
+        "NOT to change your spouse": "NOT to change your spouse",
+        "NOT to manipulate or control your spouse": "NOT to manipulate or control your spouse",
+        "NOT to solve a problem": "NOT to solve a problem",
+        "NOT the same as discussion": [
+            "A discussion deals with thoughts and feelings AND often tries to solve a problem"
+        ],
+        "ONLY deal with feelings": "ONLY deal with feelings",
+        "A Feeling versus a judgment": [
+            "A FEELING = “I feel…” or “I am…”",
+            "A JUDGEMENT = “I feel that…” or “I think that…” or “I judge that…”",
+            "A JUDGEMENT I HAVE ABOUT YOU = “I feel that you…” or “I think that you…” or “I judge that you…”"
+        ],
+        "Judgments - Open the door to": [
+            "Criticism", "Blame", "Accusations", "Defensiveness", "Arguments", "And often leads to a fight"
+        ]
+    },
+    "videos": {
+        "How to dialogue correctly": "https://www.youtube.com/embed/B6bOPtb-4Mk",
+        "How NOT to dialogue": "https://www.youtube.com/embed/Zm8RxaRqnO4"
+    }
+}

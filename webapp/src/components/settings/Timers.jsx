@@ -15,16 +15,15 @@ import {
     NumberInputStepper,
     Radio,
     RadioGroup,
-    SimpleGrid,
     Stack,
     Text,
     VStack,
     useToast,
 } from "@chakra-ui/react";
-import { API_URLS } from "../Constants";
+import { API_URLS } from "../../Constants";
 import { useContext } from "react";
-import { AppContext } from "../providers/AppProvider";
-import { AuthContext } from "../providers/AuthProvider";
+import { AppContext } from "../../providers/AppProvider";
+import { AuthContext } from "../../providers/AuthProvider";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import { FaSave } from "react-icons/fa";
@@ -56,10 +55,11 @@ function Timers() {
 					isClosable: true,
 				});
 			}
-            setIsSaving(false);
-        } catch (e) {
-            console.log(e);
-        }
+        } catch (error) {
+			console.error(error);
+		} finally {
+			setIsSaving(false);
+		}
     };
 
     useEffect(() => {

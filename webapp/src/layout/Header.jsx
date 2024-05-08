@@ -96,6 +96,19 @@ function Header() {
 						</ChakraLink>
 						<ChakraLink
 							as={ReactRouterLink}
+							to="/upcoming"
+							_hover={{ color: themeColor }}
+							{...(location.pathname === '/upcoming' && { color: themeColor })}
+						>
+							<Text
+								fontSize={16}
+								fontWeight={600}
+							>
+								Upcoming
+							</Text>
+						</ChakraLink>
+						<ChakraLink
+							as={ReactRouterLink}
 							to="/history"
 							_hover={{ color: themeColor }}
 							{...(location.pathname === '/history' && { color: themeColor })}
@@ -104,7 +117,7 @@ function Header() {
 								fontSize={16}
 								fontWeight={600}
 							>
-								Dialogue History
+								History
 							</Text>
 						</ChakraLink>
 
@@ -167,6 +180,11 @@ function Header() {
 											onClick={() => navigate("/")}
 										>
 											Home
+										</MenuItem>
+										<MenuItem
+											onClick={() => navigate("/upcoming")}
+										>
+											Upcoming Dialogues
 										</MenuItem>
 										<MenuItem
 											onClick={() => navigate("/history")}

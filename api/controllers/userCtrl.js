@@ -113,7 +113,7 @@ const UserCtrl = () => {
 
     const updateWords = async ({ words, email }) => {
         const collection = getUserCollection();
-        if (validateInfo(timers)) {
+        if (validateInfo(words)) {
             const user = await checkExist(email);
             if (user) {
                 await collection.updateOne(

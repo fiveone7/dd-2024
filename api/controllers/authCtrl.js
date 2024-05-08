@@ -96,10 +96,31 @@ const AuthCtrl = () => {
         }
     };
 
+    const resetPassword = async(email, password, currentPassword) => {
+        const user = await checkExist(email);
+        if (user && user.password == currentPassword) {
+            const collection = getUserCollection();
+            await collection.updateOne(
+                {
+                    email: email,
+                },
+                {
+                    $set: {
+                        password: password,
+                    },
+                }
+            );
+            return { success: true, message: "Password has been reset" };
+        } else {
+            return { success: false, message: "Current password is not correct" };
+        }
+    }
+
     return {
         login,
         register,
         checkExist,
+        resetPassword
     };
 };
 

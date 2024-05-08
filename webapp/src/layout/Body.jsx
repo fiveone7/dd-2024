@@ -5,6 +5,12 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import Register from "../pages/Register";
 import Settings from "../pages/Settings";
+import About from "../pages/About";
+import Pricing from "../pages/Pricing";
+import Material from "../pages/Material";
+import Upcoming from "../pages/Upcoming";
+import History from "../pages/History";
+import CreateQuestion from "../pages/CreateQuestion";
 
 function Body() {
 	return (
@@ -33,7 +39,27 @@ function Body() {
 				/>
 				<Route
 					path="/history"
-					element={<Settings />}
+					element={<History />}
+				/>
+				<Route
+					path="/about"
+					element={<About />}
+				/>
+				<Route
+					path="/upgrade"
+					element={<Pricing />}
+				/>
+				<Route
+					path="/material"
+					element={<Material />}
+				/>
+				<Route
+					path="/upcoming"
+					element={<Upcoming />}
+				/>
+				<Route
+					path="/create"
+					element={<CreateQuestion/>}
 				/>
 			</Routes>
 		</Box>

@@ -12,10 +12,10 @@ import {
 } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { FaSave } from "react-icons/fa";
-import { AppContext } from "../providers/AppProvider";
-import { AuthContext } from "../providers/AuthProvider";
+import { AppContext } from "../../providers/AppProvider";
+import { AuthContext } from "../../providers/AuthProvider";
 import axios from "axios";
-import { API_URLS } from "../Constants";
+import { API_URLS } from "../../Constants";
 
 function Words() {
 	const { cookieAlive } = useContext(AuthContext);
@@ -64,6 +64,7 @@ function Words() {
 	}, [cookieAlive, setWords, toast]);
 
 	const handleSave = async () => {
+		console.log(words)
 		try {
 			if (!validateInfo(words)) {
 				toast({
@@ -76,7 +77,7 @@ function Words() {
 				return;
 			}
 			setIsSaving(true);
-			const response = await axios.post(API_URLS.WORDS_UPDATE, words);
+			const response = await axios.post(API_URLS.WORDS_UPDATE, { words, email: cookieAlive() });
 
 			if (response.data.success) {
 				toast({
@@ -95,9 +96,10 @@ function Words() {
 					isClosable: true,
 				});
 			}
-			setIsSaving(false);
 		} catch (error) {
 			console.error(error);
+		} finally {
+			setIsSaving(false);
 		}
 	};
 

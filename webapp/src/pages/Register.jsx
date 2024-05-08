@@ -95,11 +95,10 @@ function Register() {
 					isClosable: true,
 				});
 			}
-
-			setIsLoading(false);
-				
 		} catch (error) {
 			console.error(error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 

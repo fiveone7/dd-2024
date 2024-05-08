@@ -16,12 +16,12 @@ import {
 	CardFooter,
 	useToast
 } from "@chakra-ui/react";
-import { AppContext } from "../providers/AppProvider";
-import { AuthContext } from "../providers/AuthProvider";
+import { AppContext } from "../../providers/AppProvider";
+import { AuthContext } from "../../providers/AuthProvider";
 import { FaSave } from "react-icons/fa";
 import { useContext, useState, useEffect } from "react";
 import axios from 'axios';
-import { API_URLS } from "../Constants";
+import { API_URLS } from "../../Constants";
 
 function Appointment() {
 	const [isSaving, setIsSaving] = useState(false);
@@ -125,9 +125,11 @@ function Appointment() {
 					isClosable: true,
 				});
 			}
-			setIsSaving(false);
+			
 		} catch (error) {
 			console.error(error);
+		} finally {
+			setIsSaving(false);
 		}
 	}
 
@@ -256,7 +258,7 @@ function Appointment() {
 						<NumberInput
 							min={0}
 							max={59}
-							w={'10vw'}
+							w={'10rem'}
 							value={writingMin}
 							onChange={(e) => handleChangeMin(e, 'writing')}>
 							<NumberInputField
@@ -279,7 +281,7 @@ function Appointment() {
 						<NumberInput
 							min={0}
 							max={12}
-							w={'10vw'}
+							w={'10rem'}
 							value={sharingHour}
 							onChange={(e) => handleChangeHour(e, 'sharing')}>
 							<NumberInputField
@@ -297,7 +299,7 @@ function Appointment() {
 						<NumberInput
 							min={0}
 							max={59}
-							w={'10vw'}
+							w={'10rem'}
 							value={sharingMin}
 							onChange={(e) => handleChangeMin(e, 'sharing')}>
 							<NumberInputField

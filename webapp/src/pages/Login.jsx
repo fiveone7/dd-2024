@@ -74,7 +74,7 @@ function Login() {
 				login({ email, token: response.data.token });
 				if (Object.keys(response.data.user.contact).length > 0) {
 					setContactInfo(response.data.user.contact);
-					navigate("/");
+					navigate("/upcoming");
 					toast({
 						title: "Login Success",
 						description: `${response.data.message}.`,
@@ -101,9 +101,10 @@ function Login() {
 					isClosable: true,
 				});
 			}
-			setIsLoading(false);
 		} catch (error) {
 			console.error(error);
+		} finally {
+			setIsLoading(false);
 		}
 	};
 

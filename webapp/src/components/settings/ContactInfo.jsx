@@ -12,10 +12,10 @@ import {
 } from "@chakra-ui/react";
 import { useContext, useEffect, useState } from "react";
 import { FaSave } from "react-icons/fa";
-import { AppContext } from "../providers/AppProvider";
-import { AuthContext } from "../providers/AuthProvider";
+import { AppContext } from "../../providers/AppProvider";
+import { AuthContext } from "../../providers/AuthProvider";
 import axios from "axios";
-import { API_URLS } from "../Constants";
+import { API_URLS } from "../../Constants";
 
 function ContactInfo() {
 	const { cookieAlive } = useContext(AuthContext);
@@ -95,9 +95,10 @@ function ContactInfo() {
 					isClosable: true,
 				});
 			}
-			setIsSaving(false);
 		} catch (error) {
 			console.error(error);
+		} finally {
+			setIsSaving(false);
 		}
 	};
 
