@@ -29,7 +29,7 @@ function Login() {
 	const toast = useToast();
 	const navigate = useNavigate();
 	const { login } = useContext(AuthContext);
-	const { setContactInfo } = useContext(AppContext);
+	const { setContactInfo, setSubscription } = useContext(AppContext);
 	const [email, setEmail] = useState("");
 	const [pwd, setPwd] = useState("");
 	const [emailValid, setEmailValid] = useState(false);
@@ -74,6 +74,7 @@ function Login() {
 				login({ email, token: response.data.token });
 				if (Object.keys(response.data.user.contact).length > 0) {
 					setContactInfo(response.data.user.contact);
+					setSubscription(response.data.user.subscription);
 					navigate("/upcoming");
 					toast({
 						title: "Login Success",

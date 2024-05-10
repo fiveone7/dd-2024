@@ -67,6 +67,11 @@ const AppProvider = ({ children }) => {
         share: ""
     });
 
+    const [subscription, setSubscription] = useState({
+        date: new Date(),
+        type: 'free'
+    });
+
     return (
         <AppContext.Provider
             value={{
@@ -78,6 +83,8 @@ const AppProvider = ({ children }) => {
                 setTimers,
                 words,
                 setWords,
+                subscription,
+                setSubscription
             }}
         >
             {children}

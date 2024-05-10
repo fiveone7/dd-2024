@@ -88,6 +88,10 @@ const AuthCtrl = () => {
                 done: '',
                 share: ''
             },
+            subscription: {
+                date: new Date(),
+                plan: 0
+            }
         });
         if (user) {
             return { success: true, message: "Registered successfully" };

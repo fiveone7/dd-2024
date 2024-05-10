@@ -3,8 +3,7 @@ const material = express.Router();
 const fs = require('fs');
 
 material.get('/howto', async(req, res)=> {
-    const materials = JSON.parse(fs.readFileSync('materials.json', 'utf8'));
-    console.log(materials)
+    const materials = JSON.parse(fs.readFileSync('assets/materials.json', 'utf8'));
     try {
         if (materials) {
             res.send({ success: true, message: "Success!", data: materials['howto']});
@@ -17,8 +16,7 @@ material.get('/howto', async(req, res)=> {
 });
 
 material.get('/glossary', async(req, res)=> {
-    const materials = JSON.parse(fs.readFileSync('materials.json', 'utf8'));
-    console.log(materials)
+    const materials = JSON.parse(fs.readFileSync('assets/materials.json', 'utf8'));
     try {
         if (materials) {
             res.send({ success: true, message: "Success!", data: materials['glossary']});
@@ -31,8 +29,7 @@ material.get('/glossary', async(req, res)=> {
 });
 
 material.get('/pim', async(req, res)=> {
-    const materials = JSON.parse(fs.readFileSync('materials.json', 'utf8'));
-    console.log(materials)
+    const materials = JSON.parse(fs.readFileSync('assets/materials.json', 'utf8'));
     try {
         if (materials) {
             res.send({ success: true, message: "Success!", data: materials['pim']});
@@ -45,8 +42,7 @@ material.get('/pim', async(req, res)=> {
 });
 
 material.get('/weds', async(req, res)=> {
-    const materials = JSON.parse(fs.readFileSync('materials.json', 'utf8'));
-    console.log(materials)
+    const materials = JSON.parse(fs.readFileSync('assets/materials.json', 'utf8'));
     try {
         if (materials) {
             res.send({ success: true, message: "Success!", data: materials['weds']});
@@ -59,8 +55,7 @@ material.get('/weds', async(req, res)=> {
 });
 
 material.get('/rules', async(req, res)=> {
-    const materials = JSON.parse(fs.readFileSync('materials.json', 'utf8'));
-    console.log(materials)
+    const materials = JSON.parse(fs.readFileSync('assets/materials.json', 'utf8'));
     try {
         if (materials) {
             res.send({ success: true, message: "Success!", data: materials['rules']});
@@ -73,8 +68,7 @@ material.get('/rules', async(req, res)=> {
 });
 
 material.get('/videos', async(req, res)=> {
-    const materials = JSON.parse(fs.readFileSync('materials.json', 'utf8'));
-    console.log(materials)
+    const materials = JSON.parse(fs.readFileSync('assets/materials.json', 'utf8'));
     try {
         if (materials) {
             res.send({ success: true, message: "Success!", data: materials['videos']});

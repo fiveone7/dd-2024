@@ -1,43 +1,44 @@
-import {
-    Card,
-    CardBody,
-    CardFooter,
-    Button,
-    VStack,
-    HStack,
-    Spacer,
-    Text,
-} from "@chakra-ui/react";
-import { FaCalendar } from "react-icons/fa";
-import { SingleDatepicker } from "chakra-dayzed-datepicker";
-import { useState } from "react";
+import { HStack, Spacer, Text, Input, Container } from "@chakra-ui/react";
+import { useContext } from "react";
+import { FaCalendar, FaEdit, FaShare } from "react-icons/fa";
+import { QuestionContext } from "../../providers/QuestionProvider";
 
 function QuestionAppointment() {
-    const [date, setDate] = useState(new Date());
+    const { date, setDate, writingTime, setWritingTime, sharingTime, setSharingTime} = useContext(QuestionContext);
+    const today = new Date().toISOString().split('T')[0];
+    const handleChangeDate = (e) => {
+        setDate(e.target.value);
+    };
+
+    const handleChangeWritingTime = (e) => {
+        setWritingTime(e.target.value);
+    };
+
+    const handleChangeSharingTime = (e) => {
+        setSharingTime(e.target.value);
+    };
+
     return (
-        <Card minH={"400px"} minWidth={"400px"}>
-            <CardBody>
-                <VStack>
-                    <HStack spacing={4}>
-                        <FaCalendar></FaCalendar>
-                        <Text>Date</Text>
-                        <Spacer />
-                        <SingleDatepicker
-                            name="date-input"
-                            date={date}
-                            onDateChange={setDate}
-                        />
-                    </HStack>
-                </VStack>
-            </CardBody>
-            <CardFooter>
-                <HStack w={"full"}>
-                    <Button>Prev</Button>
-                    <Spacer />
-                    <Button>Next</Button>
-                </HStack>
-            </CardFooter>
-        </Card>
+        <Container>
+            <HStack spacing={4} mb={2}>
+                <FaCalendar />
+                <Text>Date</Text>
+                <Spacer />
+                <Input type="date" onChange={handleChangeDate} min={today} defaultValue={date}/>
+            </HStack>
+            <HStack spacing={4} mb={2}>
+                <FaEdit />
+                <Text>Writing</Text>
+                <Spacer />
+                <Input type="time" onChange={handleChangeWritingTime} defaultValue={writingTime}/>
+            </HStack>
+            <HStack spacing={4} mb={2}>
+                <FaShare />
+                <Text>Sharing</Text>
+                <Spacer />
+                <Input type="time" onChange={handleChangeSharingTime} defaultValue={sharingTime}/>
+            </HStack>
+        </Container>
     );
 }
 

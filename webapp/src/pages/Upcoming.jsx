@@ -1,6 +1,5 @@
 import { useState } from "react";
-import { Box, VStack, Text, Image, Button, Heading } from "@chakra-ui/react";
-import splash from "../assets/imgs/splash.png";
+import { Box, VStack, Button, Heading } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { useContext, useEffect } from "react";
 import { AuthContext } from "../providers/AuthProvider";
