@@ -14,7 +14,7 @@ function QuestionQuestions() {
             {currentCategory === '-100' ? (
                 <VStack>
                     <Text fontSize={'3xl'} fontWeight={'500'}>Write your own question</Text>
-                    <Textarea>
+                    <Textarea value={currentQuestion} onChange={e => setCurrentQuestion(e.target.value)}>
 
                     </Textarea>
                 </VStack>
@@ -23,7 +23,7 @@ function QuestionQuestions() {
                     <VStack align={'start'} w={'full'}>
                         {category[currentCategory] &&
                             category[currentCategory]['questions'].map((question, idx) => (
-                                <Radio value={`${question.id}`} key={idx}>
+                                <Radio value={`${question.question}`} key={idx}>
                                     {question.question}
                                 </Radio>
                             ))}

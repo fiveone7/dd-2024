@@ -19,14 +19,24 @@ import {
     Button,
     Spacer,
     useToast,
+    AlertDialog,
+    AlertDialogOverlay,
+    AlertDialogContent,
+    AlertDialogHeader,
+    AlertDialogBody,
+    AlertDialogFooter,
+    useDisclosure
 } from "@chakra-ui/react";
 import QuestionAppointment from "../components/question/question-appointment";
 import { QuestionContext } from "../providers/QuestionProvider";
 import { useContext } from "react";
 import QuestionCategory from "../components/question/question-category";
 import QuestionQuestions from "../components/question/question-questions";
+import axios from "axios";
+import { API_URLS } from "../Constants";
 function CreateQuestion() {
-    const { onNext, onPrev } = useContext(QuestionContext);
+    const {isOpen, onOpen, onClose} = useDisclosure();
+    const { onNext, onPrev, date, writingTime, sharingTime, category, currentQuestion } = useContext(QuestionContext);
     const toast = useToast();
     const steps = [
         {
@@ -79,11 +89,21 @@ function CreateQuestion() {
             });
             return;
         }
-        if (activeStep + 1 > 3) step = 3;
+        if (activeStep + 1 > 3) onOpen();
         else step = activeStep + 1;
 
         setActiveStep(step);
     };
+
+    const handleSaveDialogue = async () => {
+        try {
+            const response = await axios.post(API_URLS.DIALOGUE_ADD, {});
+
+        } catch (e) {
+            console.log(e);
+        }
+        onClose();
+    }
 
     return (
         <Box w={"full"}>
@@ -137,6 +157,31 @@ function CreateQuestion() {
                     </CardFooter>
                 </Card>
             </VStack>
+            <AlertDialog
+                isOpen={isOpen}
+                onClose={onClose}
+            >
+                <AlertDialogOverlay>
+                <AlertDialogContent>
+                    <AlertDialogHeader fontSize='lg' fontWeight='bold'>
+                        Save Dialogue
+                    </AlertDialogHeader>
+
+                    <AlertDialogBody>
+                        Are you sure?
+                    </AlertDialogBody>
+
+                    <AlertDialogFooter>
+                    <Button onClick={onClose}>
+                        Cancel
+                    </Button>
+                    <Button colorScheme='teal' onClick={handleSaveDialogue} ml={3}>
+                        Save
+                    </Button>
+                    </AlertDialogFooter>
+                </AlertDialogContent>
+                </AlertDialogOverlay>
+            </AlertDialog>
         </Box>
     );
 }

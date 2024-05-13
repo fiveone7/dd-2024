@@ -18,4 +18,5 @@ export const API_URLS = {
     MATERIAL_RULES: `${process.env.REACT_APP_API_URL}/material/rules`,
     MATERIAL_VIDEOS: `${process.env.REACT_APP_API_URL}/material/videos`,
     DIALOGUE_CATEGORY_LIST: `${process.env.REACT_APP_API_URL}/dialogue/category_list`,
+    DIALOGUE_ADD: `${process.env.REACT_APP_API_URL}/dialogue/add`,
 }

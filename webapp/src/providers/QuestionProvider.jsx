@@ -21,9 +21,11 @@ const QuestionProvider = ({ children }) => {
             }
         } else if (step === 2) {
             if (category && category[currentCategory] && category[currentCategory]['questions'] && category[currentCategory]['questions'].length > 0)
-                setCurrentQuestion(category[currentCategory]['questions'][0].id);
+                setCurrentQuestion(category[currentCategory]['questions'][0].question);
+            if (currentCategory == "-100")
+                setCurrentQuestion("");
         } else if (step === 3) {
-            
+
         }
 
         return {
@@ -64,7 +66,7 @@ const QuestionProvider = ({ children }) => {
                 currentQuestion,
                 setCurrentQuestion,
                 currentCategory,
-                setCurrentCategory,
+                setCurrentCategory
             }}
         >
             {children}

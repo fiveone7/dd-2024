@@ -1,4 +1,4 @@
-const { getUserCollection } = require("../helpers/db-conn");
+const { getUserCollection, getDialoguesCollection } = require("../helpers/db-conn");
 const fs = require('fs');
 const DialogueCtrl = () => {
     const getCategoryList = async () => {
@@ -15,8 +15,26 @@ const DialogueCtrl = () => {
         }
     }
 
+    const addDialogue = async (data) => {
+        try {
+            const collection = getDialoguesCollection();
+            const dialogue = await collection.insertOne({
+
+            });
+            if (dialogue) {
+                return { success: true, message: "Add Dialogue Successfully" }
+            }
+            else {
+                return { success: false, message: "MongDB API Error" }
+            }
+        } catch (e) {
+            return { success: false, message: e.message }
+        }
+    }
+
     return {
-        getCategoryList
+        getCategoryList,
+        addDialogue
     }
 }
 

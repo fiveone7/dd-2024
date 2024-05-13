@@ -13,4 +13,13 @@ dialogue.get('/category_list', async(req, res)=> {
     }
 });
 
+dialogue.post('/add', async(req, res) => {
+    try {
+        const data = req.body;
+        res.send(await dialogueCtrl.addDialogue(data));
+    } catch (e) {
+        res.status(500).json({ success: false, message: `API error ${e.message}`});
+    }
+})
+
 module.exports = dialogue;

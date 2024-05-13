@@ -24,4 +24,8 @@ getUserCollection = ()=> {
     return db.collection('users');
 }
 
-module.exports = { getDb, connectToDatabase, getUserCollection };
+getDialoguesCollection = ()=> {
+    return db.collection('dialogues');
+}
+
+module.exports = { getDb, connectToDatabase, getUserCollection, getDialoguesCollection };
