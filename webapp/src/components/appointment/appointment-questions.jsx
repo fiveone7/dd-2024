@@ -4,7 +4,7 @@ import { AppContext } from "../../providers/AppProvider";
 import { useState } from "react";
 import { QuestionContext } from "../../providers/QuestionProvider";
 
-function QuestionQuestions() {
+function AppointmentQuestions() {
 
     const { subscription } = useContext(AppContext);
     const { category, currentCategory, currentQuestion, setCurrentQuestion } = useContext(QuestionContext);
@@ -34,4 +34,4 @@ function QuestionQuestions() {
     );
 }
 
-export default QuestionQuestions;
+export default AppointmentQuestions;

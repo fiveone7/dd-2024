@@ -10,7 +10,8 @@ import Pricing from "../pages/Pricing";
 import Material from "../pages/Material";
 import Upcoming from "../pages/Upcoming";
 import History from "../pages/History";
-import CreateQuestion from "../pages/CreateQuestion";
+import CreateAppointment from "../pages/CreateAppointment";
+import WriteDialogue from "../pages/WriteDialogue";
 
 function Body() {
 	return (
@@ -59,7 +60,11 @@ function Body() {
 				/>
 				<Route
 					path="/create"
-					element={<CreateQuestion/>}
+					element={<CreateAppointment/>}
+				/>
+				<Route
+					path="/write"
+					element={<WriteDialogue/>}
 				/>
 			</Routes>
 		</Box>

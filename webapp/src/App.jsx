@@ -7,6 +7,7 @@ import { BrowserRouter } from "react-router-dom";
 import AuthProvider from "./providers/AuthProvider";
 import AppProvider from "./providers/AppProvider";
 import QuestionProvider from "./providers/QuestionProvider";
+import DialogueProvider from "./providers/DialogueProvider";
 
 function App() {
     return (
@@ -23,7 +24,9 @@ function App() {
                     <Header />
                     <AppProvider>
                         <QuestionProvider>
-                            <Body />
+                            <DialogueProvider>
+                                <Body />
+                            </DialogueProvider>
                         </QuestionProvider>
                     </AppProvider>
                     <Footer />

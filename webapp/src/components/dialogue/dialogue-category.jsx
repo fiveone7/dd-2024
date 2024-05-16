@@ -1,27 +1,27 @@
-import { Box, RadioGroup, Stack, Radio, Container } from "@chakra-ui/react";
+import { Box, RadioGroup, Stack, Radio, Container, Accordion, Tabs, TabList, Tab, AccordionItem, AccordionButton, AccordionPanel, VStack, Checkbox } from "@chakra-ui/react";
 import { useContext } from "react";
 import { AppContext } from "../../providers/AppProvider";
 import { useState, useEffect } from "react";
 import { API_URLS } from "../../Constants";
 import axios from "axios";
 import { useToast } from "@chakra-ui/react";
-import { QuestionContext } from "../../providers/QuestionProvider";
+import { DialogueContext } from "../../providers/DialogueProvider";
 
-function QuestionCategory() {
+function DialogueCategory() {
     const toast = useToast();
     const { subscription } = useContext(AppContext);
-    const { category, setCategory, currentCategory, setCurrentCategory } = useContext(QuestionContext);
+    const { feelingCategory, setFeelingCategory, emotion } = useContext(DialogueContext);
     useEffect(() => {
         const getCategoryList = async () => {
             try {
                 const response = await axios.get(
-                    API_URLS.DIALOGUE_CATEGORY_LIST
+                    API_URLS.DIALOGUE_FEELING_CATEGORY_LIST
                 );
                 if (response.data.success) {
-                    setCategory(response.data.data);
+                    setFeelingCategory(response.data.data);
                 } else {
                     toast({
-                        title: "Category and Questions",
+                        title: "Category and Feelings",
                         description: `${response.data.message}.`,
                         status: "error",
                         duration: 3000,
@@ -34,10 +34,43 @@ function QuestionCategory() {
         };
 
         getCategoryList();
-    }, [setCategory, toast]);
+    }, [setFeelingCategory, toast]);
+
+    const handleChangeFeeling = (checked, feeling)=> {
+        if (checked) {
+
+        } else {
+            
+        }
+    }
+
     return (
         <Container>
-            <RadioGroup onChange={setCurrentCategory} value={currentCategory} id="question-category">
+            <Accordion>
+                {feelingCategory && feelingCategory.length > 0 && feelingCategory.filter((feeling) => feeling.emotion === emotion).map((item, idx) => (
+                    <AccordionItem>
+                        <AccordionButton bg={'blue.400'} color={'white'}>
+                            {item.category}
+                        </AccordionButton>
+                        <AccordionPanel>
+                            <VStack align={'start'} pl={6}>
+                                {item.feelings.map((feeling, idxx)=> (
+                                    <Checkbox onChange={(e)=> {handleChangeFeeling(e.target.checked, feeling)}}>
+                                        {feeling}
+                                    </Checkbox>
+                                ))}
+                            </VStack>
+                        </AccordionPanel>
+                    </AccordionItem>
+                ))}
+            </Accordion>
+            <Tabs>
+                <TabList>
+
+
+                </TabList>
+            </Tabs>
+            {/* <RadioGroup onChange={setCurrentCategory} value={currentCategory} id="question-category">
                 <Stack align={'start'}>
                     {category &&
                         category.map((category_question, idx) => (
@@ -56,9 +89,9 @@ function QuestionCategory() {
 
                         ))}
                 </Stack>
-            </RadioGroup>
+            </RadioGroup> */}
         </Container>
     );
 }
 
-export default QuestionCategory;
+export default DialogueCategory;

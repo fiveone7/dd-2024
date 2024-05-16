@@ -9,7 +9,7 @@ import axios from "axios";
 import { API_URLS } from "../../Constants";
 import { AuthContext } from "../../providers/AuthProvider";
 
-function QuestionAppointment() {
+function AppointmentDatetime() {
     const toast = useToast();
     const {
         date,
@@ -135,4 +135,4 @@ function QuestionAppointment() {
     );
 }
 
-export default QuestionAppointment;
+export default AppointmentDatetime;

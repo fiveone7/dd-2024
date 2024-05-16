@@ -17,6 +17,9 @@ export const API_URLS = {
     MATERIAL_WEDS: `${process.env.REACT_APP_API_URL}/material/weds`,
     MATERIAL_RULES: `${process.env.REACT_APP_API_URL}/material/rules`,
     MATERIAL_VIDEOS: `${process.env.REACT_APP_API_URL}/material/videos`,
-    DIALOGUE_CATEGORY_LIST: `${process.env.REACT_APP_API_URL}/dialogue/category_list`,
-    DIALOGUE_ADD: `${process.env.REACT_APP_API_URL}/dialogue/add`,
+    DIALOGUE_QUESTION_CATEGORY_LIST: `${process.env.REACT_APP_API_URL}/dialogue/question_category_list`,
+    DIALOGUE_FEELING_CATEGORY_LIST: `${process.env.REACT_APP_API_URL}/dialogue/feeling_category_list`,
+    DIALOGUE_WRITE: `${process.env.REACT_APP_API_URL}/dialogue/write`,
+    DIALOGUE_CREATE: `${process.env.REACT_APP_API_URL}/appointment/create`,
+    DIALOGUE_APPOINTMENTS: `${process.env.REACT_APP_API_URL}/appointment/appointments`,
 }

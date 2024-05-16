@@ -4,7 +4,7 @@ const mongodbUri = 'mongodb+srv://defibizzylos:aaf0NKQ5yZKy9Z8Z@cluster0.p9e2zcv
 const client = new MongoClient(mongodbUri);
 let db;
 
-connectToDatabase = async ()=> {
+connectToDatabase = async () => {
     try {
         await client.connect();
         db = client.db("dd");
@@ -16,16 +16,20 @@ connectToDatabase = async ()=> {
     }
 }
 
-getDb = ()=> {
+getDb = () => {
     return db;
 }
 
-getUserCollection = ()=> {
+getUserCollection = () => {
     return db.collection('users');
 }
 
-getDialoguesCollection = ()=> {
+getAppointmentsCollection = () => {
+    return db.collection('appointments');
+}
+
+getDialoguesCollection = () => {
     return db.collection('dialogues');
 }
 
-module.exports = { getDb, connectToDatabase, getUserCollection, getDialoguesCollection };
+module.exports = { getDb, connectToDatabase, getUserCollection, getAppointmentsCollection, getDialoguesCollection };
